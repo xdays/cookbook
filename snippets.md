@@ -70,8 +70,8 @@
 
 ##一次完成多次替换
     import re
-    def make_xlat(*args, **kwds)
-        adict = dict(*args, **kwds)
+    def make_xlat(\*args, **kwds)
+        adict = dict(\*args, **kwds)
         rx = re.compile('|'.join(map(re.escape, adict)))
         def one_xlat(match):
             return adict[match.group(0)]
@@ -86,3 +86,44 @@
     def endsWith(s, *endings):
         return anyTrue(s.endswith, endings)
 
+#文件
+##处理字符串中的zip文件
+    import cStringIO, zipfile
+    class zipString(zipfile.ZipFile):
+        def __init__(self, datastring):
+            ZipFile.__init__(self, cStringIO.StringIO(datastring))
+
+##将文件树归档到一个tar文件
+    import tarfile, os
+    def make_tar(folder_to_backup, dest_folder, commpression='bz'):
+        if commpression:
+            dest_ext = '.' + compress
+        else:
+            dest_ext = ''
+        arcname = os.path.basename(folder_to_backup)
+        dest_name = '%s.tar%s' % (arcname, dest_ext)
+        dest_path = os.path.join(dest_folder, dest_name)
+        if commpression:
+            dest_cmp = ':' + compression
+        else:
+            dest_cmp = ''
+        out = tarfile.TarFile.open(dest_path, 'w'+dest_cmp)
+        out.add(folder_to_backup, arcname)
+        out.close()
+        return dest_path
+
+##遍历目录树
+import os, fnmatch
+def all_files(root, patterns='*', single_level=False, yield_folders=False):
+    patterns = patterns.split(';')
+    for path, subdirs, files in os.walk(root):
+        if yield_folders:
+            files.extend(subdirs)
+        files.sort()
+        for name in files:
+            for pattern in patterns:
+                if fnmatch.fnmatch(name, pattern):
+                    yield os.path.join(path, name)
+                    break
+        if sinle_level:
+            break
