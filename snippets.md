@@ -127,3 +127,32 @@
                         break
             if sinle_level:
                 break
+
+#日期和事件
+##计算昨天和明天的日期
+    import datetime
+    today = datetime.date.today()
+    yesterday = today - datetime.timedelta(days=1)
+    tomorrow = today + datetime.timedelta(days=1)
+    print yesterday, today, tomorrow
+
+##定时执行命令
+    import time, os, sys, sched
+    schedule = sched.scheduler(time.time, time.sleep)
+    def perform_command(cmd, inc):
+        schedule.ender(inc, 0, perform_command, (cmd, inc))
+        os.system(cmd)
+    def main(cmd, inc=60):
+        schedule.enter(0, 0, perform_command, (cmd, inc))
+        schedule.run()
+    if __name__ == '__main__':
+        numargs = len(sys.argv) -1
+        if numargs < 1 or numargs > 2:
+            print 'usage: ' +  sys.argv[0] + ' command [seconds_delay]'
+            sys.exit(1)
+        cmd = sys.argv[1]
+        if numbargs < 3:
+            main(cmd)
+        else:
+            inc = int(sys.argv[2])
+            main(cmd, inc)
