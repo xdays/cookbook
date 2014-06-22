@@ -156,3 +156,42 @@
         else:
             inc = int(sys.argv[2])
             main(cmd, inc)
+
+#Python技巧
+##循环序列元素和索引
+    #将序列转换成迭代器
+    for index, item in emumerate(sequence):
+        if item > 23:
+            sequence[index] = transform(item)
+
+##展开嵌套的序列
+    def list_or_tuple(x):
+        return isinstance(x, (list, tuple))
+    def flatten(sequence, to_expand=list_or_tuple):
+        for item in sequence:
+            if to_expand(item):
+                for subitem in flatten(item, to_expand):
+                    yield subitem
+            else:
+                yield item
+
+##二位阵列变换
+    arr = [[1,2,3],[4,5,6],[7,8,9]]
+    print map(list, zip(\*arr))
+
+##将列表交替作为字典的键值
+    def dictFromList(keyAndValue):
+        return dict(zip(keyAndValue[::2], keyAndValue[1::2]))
+
+或者更通用的实现：
+
+    def pairwise(iterable):
+        itnext = iter(iterable).next
+        while True:
+            yield itnext(), itnext()
+    def dictFromSequence(seq):
+        return dict(pairwise(seq))
+
+##反转字典
+    def invert_dict(d):
+        return dict([ (v, k) for k,v in d.iteritems()])
