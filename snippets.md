@@ -195,3 +195,38 @@
 ##反转字典
     def invert_dict(d):
         return dict([ (v, k) for k,v in d.iteritems()])
+
+#排序和搜索
+##根据内嵌数字排序
+    import re
+    def embeded_numbers(s):
+        pieces = re_digits.split(s)
+        pieces[1::2] = map(int, pieces[1::2])
+        return pieces
+    def sort_strings_with_embeded_numbers(alist):
+        return sorted(alist, key=embeded_numbers)
+
+##增加元素时保持序列顺序
+    import heapq
+    heapq.heapify(the_list)
+    heapq.heappop(the_list)
+    heapq.heappush(the_list)
+
+##在已排序的列表中寻找元素
+    import bisect
+    x_insert_point = bisect.bisect_right(L, x)
+    x_is_present = L[x_insert_point-1:x_insert_point] == [x]
+
+##三行实现排序
+    #注意这只是演示列表推导式的强大，实际代码应该用sort方法
+    def qsort(L):
+        if len(L) <= 1: return L
+    return qsort([lt for lt in L[1:] if lt < L[0]) + L[0:1] + [ge for ge in L[1:] if ge >= L[0]])
+
+##添加列表不存在的元素
+    def addUniqe(baseList, otherList):
+        auxDict = dict.fromkeys(baseList)
+        for item in otherList:
+            if item not in auxDict:
+                baseList.append(item)
+                auxDict[item] = None
