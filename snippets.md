@@ -230,3 +230,29 @@
             if item not in auxDict:
                 baseList.append(item)
                 auxDict[item] = None
+
+#持久化和数据库
+##序列化时压缩
+    def cPickle, gzip
+    def save(filename, *objects):
+        fil = gzip.open(filename, 'wb')
+        for obj in objects: cPickle.dump(obj, fil, proto=2)
+        fil.close()
+    def load(filename):
+        fil = gzip.open(filename, 'rb')
+        while True:
+            try: yield cPickle.load(fil)
+            except: EOFError: break
+        fil.close()
+
+#系统管理
+##统计来访IP
+    def caculateApache(logfile_pathname):
+        ipHitListing = {}
+        contents = open(logfile_pathname, 'r')
+        for line in contents:
+            ip = line.split(' ', 1)[0]
+            if 6 < len(ip) <= 15:
+                # 这行可以省去if...else...的逻辑
+                ipHitListing[ip] = ipHitListing.get(ip, 0) + 1
+        return ipHitListing
