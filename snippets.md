@@ -256,3 +256,32 @@
                 # 这行可以省去if...else...的逻辑
                 ipHitListing[ip] = ipHitListing.get(ip, 0) + 1
         return ipHitListing
+
+#网络编程
+##通过socket传输数据
+    #server.py
+    import socket
+    port = 8001
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.bind('', port)
+    print 'Waiting on port: %s' % port
+    while True:
+        data, addr = s.recvfrom(1024)
+        print 'Received: %s from %s' % (data, addr)
+
+    #client.py
+    import socket
+    port = 8081
+    host = 'localhost'
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.sendto("Holy Guido! It's woring.", (host, port))
+
+##判断FTP是否可用
+    import socket, ftplib
+    def isFTPSiteUp(site):
+        try:
+            ftplib.FTP(site).quit()
+        except socket.error:
+            return False
+        else:
+            return True
