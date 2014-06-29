@@ -285,3 +285,37 @@
             return False
         else:
             return True
+
+#迭代器和生成器
+##类似range的浮点数递增函数
+    import itertools
+    def frange(start, end=None, inc=1.0):
+        if end is None:
+            end = start + 0.0
+            start = 0.0
+        assert inc
+        for i in itertools.count():
+            next = start + i*inc
+            if (inc>0.0 and next>=end) or (inc<0.0 and next<=end):
+                break
+            yield next
+
+##读取带有续行符的行
+    def logical_line(physical_lines, joiner=''.join):
+        logical_line = []
+        for line in physical_lines:
+            stripped = line.rstrip()
+            if stripped.endwith('\\'):
+                logical_line.append(stripped[:-1])
+            else:
+                logical_line.append(line)
+                yield joiner(logincal_line)
+                logical_line = []
+            #如果logical_line不为空说明一个逻辑行结束了
+            if logical_line:
+                yield joiner(logical_line)
+
+
+##复制迭代器
+    import itertools
+    x1, x2 = itertools.tree(x)
