@@ -1,3 +1,30 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [data type](#data-type)
+- [declaration](#declaration)
+  - [var](#var)
+  - [let](#let)
+  - [const](#const)
+  - [destructuring](#destructuring)
+    - [array destructuring](#array-destructuring)
+    - [object destructuring](#object-destructuring)
+    - [default value](#default-value)
+  - [function declaration](#function-declaration)
+- [interface](#interface)
+  - [optional properties](#optional-properties)
+  - [readonly properties](#readonly-properties)
+  - [function type](#function-type)
+  - [indexed type](#indexed-type)
+  - [class type](#class-type)
+    - [static and instance side class(confused)](#static-and-instance-side-classconfused)
+  - [extending interface](#extending-interface)
+  - [hybrid types](#hybrid-types)
+  - [interface extending class](#interface-extending-class)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # data type
 
     // bolean
@@ -129,3 +156,174 @@
     function f({a, b}: C): void {
         // ...
     }
+
+# interface
+
+## optional properties
+
+    interface SquareConfig {
+        color?: string;
+        width?: number;
+    }
+
+    function createSquare(config: SquareConfig): { color: string; area: number } {
+        let newSquare = {color: "white", area: 100};
+        if (config.color) {
+            newSquare.color = config.color;
+        }
+        if (config.width) {
+            newSquare.area = config.width * config.width;
+        }
+        return newSquare;
+    }
+
+    let mySquare = createSquare({color: "black"});
+
+## readonly properties
+
+    interface Point {
+        readonly x: number;
+        readonly y: number;
+    }
+    let p1: Point = { x: 10, y: 20 };
+    p1.x = 5; // error!
+
+## function type
+
+    interface SearchFunc {
+        (source: string, subString: string): boolean;
+    }
+    let mySearch: SearchFunc;
+    mySearch = function(src: string, sub: string): boolean {
+        let result = src.search(sub);
+        if (result == -1) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+## indexed type
+
+    interface StringArray {
+        [index: number]: string;
+    }
+    let myArray: StringArray;
+    myArray = ["Bob", "Fred"];
+    let myStr: string = myArray[0];
+    // readonly
+    interface ReadonlyStringArray {
+        readonly [index: number]: string;
+    }
+    let myArray: ReadonlyStringArray = ["Alice", "Bob"];
+    myArray[2] = "Mallory"; // error!
+
+## class type
+
+    interface ClockInterface {
+        currentTime: Date;
+        setTime(d: Date);
+    }
+
+    class Clock implements ClockInterface {
+        currentTime: Date;
+        setTime(d: Date) {
+            this.currentTime = d;
+        }
+        constructor(h: number, m: number) { }
+    }
+
+### static and instance side class(confused)
+
+    interface ClockConstructor {
+        new (hour: number, minute: number): ClockInterface;
+    }
+    interface ClockInterface {
+        tick();
+    }
+
+    function createClock(ctor: ClockConstructor, hour: number, minute: number): ClockInterface {
+        return new ctor(hour, minute);
+    }
+
+    class DigitalClock implements ClockInterface {
+        constructor(h: number, m: number) { }
+        tick() {
+            console.log("beep beep");
+        }
+    }
+    class AnalogClock implements ClockInterface {
+        constructor(h: number, m: number) { }
+        tick() {
+            console.log("tick tock");
+        }
+    }
+
+    let digital = createClock(DigitalClock, 12, 17);
+    let analog = createClock(AnalogClock, 7, 32);
+
+## extending interface
+
+    interface Shape {
+        color: string;
+    }
+
+    interface PenStroke {
+        penWidth: number;
+    }
+
+    interface Square extends Shape, PenStroke {
+        sideLength: number;
+    }
+
+    let square = <Square>{};
+    square.color = "blue";
+    square.sideLength = 10;
+    square.penWidth = 5.0;
+
+## hybrid types
+
+    interface Counter {
+        (start: number): string;
+        interval: number;
+        reset(): void;
+    }
+
+    function getCounter(): Counter {
+        let counter = <Counter>function (start: number) { };
+        counter.interval = 123;
+        counter.reset = function () { };
+        return counter;
+    }
+
+    let c = getCounter();
+    c(10);
+    c.reset();
+    c.interval = 5.0;
+
+## interface extending class
+
+    class Control {
+        private state: any;
+    }
+
+    interface SelectableControl extends Control {
+        select(): void;
+    }
+
+    class Button extends Control {
+        select() { }
+    }
+
+    class TextBox extends Control {
+        select() { }
+    }
+
+    class Image extends Control {
+    }
+
+    class Location {
+        select() { }
+    }
+    // Button and TextBox can access state while Image and Location not
