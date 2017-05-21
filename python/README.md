@@ -4,6 +4,4 @@
 
 # 目录
 
-## cookbook
-
-[Cookbook](cookbook.md) 《Python Cookbook》
+* [Cookbook](cookbook.md) 《Python Cookbook》

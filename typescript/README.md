@@ -4,6 +4,4 @@
 
 # 目录
 
-## handbook
-
-[Handbook](handbook.md) 官方文档
+* [Handbook](handbook.md) 官方文档
