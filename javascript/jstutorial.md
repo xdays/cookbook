@@ -1,4 +1,4 @@
-# JavaScript
+# [JavaScript Turtorial](http://javascript.ruanyifeng.com/)
 
 
 ## 语法
