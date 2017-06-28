@@ -1,4 +1,4 @@
-# [JavaScript Turtorial](http://javascript.ruanyifeng.com/)
+# [JavaScript Tutorial](http://javascript.ruanyifeng.com/)
 
 
 ## 语法
