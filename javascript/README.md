@@ -4,4 +4,6 @@
 
 # 目录
 
-* [jstutorial](tutorial.md) 《JavaScript标准参考教程》
+* [JavaScript标准参考教程](tutorial.md)
+* [W3school的JavaScript教程](w3school.md)
+* [Vue.js前端开发](vuejs-web-development.md)
