@@ -86,3 +86,25 @@ void main() {
   * ListView.separated
   * ScrollController
   * ScrollNotification
+
+
+
+## 布局控件
+
+* 单子控件布局
+  * Container
+  * Padding
+  * Center
+* 多子控件布局
+  * Row
+  * Column
+  * Expanded
+* 层叠控件布局
+  * Stack
+  * Postitioned
+* 组合和自绘
+  * 把界面拆分到最小的组件单元，然后组合在一起
+  * CustomPaint
+* 主题
+  * ThemeData
+  * Theme
