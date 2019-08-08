@@ -108,3 +108,15 @@ void main() {
 * 主题
   * ThemeData
   * Theme
+
+
+
+## 依赖管理
+
+* 图片
+* 配置
+* 字体
+* App图标
+* 启动图
+* dependencies
+* pubsepct.yaml, pubspec.lock, .packages
