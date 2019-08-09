@@ -155,6 +155,10 @@ Type testing
 * is
 * is!
 
+Type convert
+
+* as
+
 Bitwise
 
 * &
