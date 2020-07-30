@@ -11,7 +11,7 @@
 
 ## Option 2
 
-    pip install jupyter
+    brew install jupyter
     
 
 ## Kernel
